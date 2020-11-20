@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
-	<security-role>
-		<description></description>
-		<role-name>guest</role-name>
-	</security-role>
-	<security-constraint>
-		<auth-constraint>
-			<description>권한 관리자명</description>
-			<role-name>guest</role-name>
-		</auth-constraint>
-	</security-constraint>
+	<display-name>Webkakao</display-name>
+	<welcome-file-list>
+        <welcome-file>signin.jsp</welcome-file>
+    </welcome-file-list>   
 </web-app>
 

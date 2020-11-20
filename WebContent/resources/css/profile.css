@@ -38,6 +38,8 @@
 .profile__container input {
   padding: 5px;
   margin-bottom: 20px;
+  border:none;
+  text-align:center;
 }
 
 .profile__actions {

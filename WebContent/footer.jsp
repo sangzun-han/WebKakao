@@ -12,7 +12,7 @@
         <i class="fa fa-search"></i>
         <span class="tab-bar__title"></span>
     </a>
-    <a href="signin.jsp" class="tab-bar__tab">
+    <a href="login.jsp" class="tab-bar__tab">
         <i class="fa fa-ellipsis-h"></i>
         <span class="tab-bar__title"></span>
     </a>

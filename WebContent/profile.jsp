@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,25 +14,64 @@
 
 <body>
 <jsp:include page="header.jsp" />
+	<%
+		String userID = null;
+		String userEmail = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+	%>
 <main class="profile">
     <header class="profile__header">
         <div class="profile__header-container">
-            <img src="./resources/images/avatar.jpg" alt="">
-            <h3 class="profile__header-title">한상준</h3>
+        <%
+        	if (userID == null) {
+        		out.println("<script>alert('권한이 없습니다.');</script>");
+        		out.println("<script>history.back();</script>");
+        %>
+            
+        <%
+        	} else {
+       	%>
+       	<%
+			if (session.getAttribute("userID") != null) {
+				userID = (String) session.getAttribute("userID");
+			}
+	        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
+			String dbID = "root";
+			String dbPassword = "0000";
+			
+			String SQL = ("select * from user where userID =?");
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,userID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){	
+	     %>
+	     	<img src="./resources/images/avatar.jpg" alt="">
+	        <h3 class="profile__header-title"><%= rs.getString("userName") %></h3>
         </div>
     </header>
     <div class="profile__container">
-        <input type="text" placeholder="이메일">
+        <input type="text" placeholder=<%= rs.getString("userEmail") %> >
+	         <%
+	        	}
+	         %>
+         <%
+        	}
+         %>
         <div class="profile__actions">
             <div class="profile__action">
-                    <span class="profile__action-circle">
-                        <i class="fa fa-comment fa-lg"></i>
-                    </span>
-                <span class="profile__action-title">채팅방</span>
+               	<span class="profile__action-circle">
+               		<a href="./chats.jsp"><i class="fa fa-comment fa-lg"></i></a>
+              	</span>
+               	<span class="profile__action-title">채팅방</span>
             </div>
             <div class="profile__action">
                     <span class="profile__action-circle">
-                        <i class="fa fa-pencil fa-lg"></i>
+                        <a href=".#"><i class="fa fa-pencil fa-lg"></i></a>
                     </span>
                 <span class="profile__action-title">프로필 수정</span>
             </div>

@@ -16,11 +16,13 @@
             <a href = "signin.jsp"><img src = "./resources/images/LOGO.jpg"></a>
         </div>
         <div class = "signUpDetail">
-            <form name="signupForm" method="POST" action="" enctype="multipart/form-data">
-                <input type="text" placeholder="이름" name="username" maxlength="10" name="id" minlength="2">
-                <input type="password" placeholder="비밀번호" name="password" required>
+            <form name="signupForm" method="POST" action="./signupAction.jsp">
+            	<input type="text" placeholder="아이디" name="userID">	
+                <input type="text" placeholder="이름" name="userName" maxlength="10">
+                <input type="password" placeholder="비밀번호" name="userPassword" required>
                 <input type="password" placeholder="비밀번호 재입력" name="repassword" required>
-                <input type="file" class="form-control-file" placeholder="이미지" name="image">
+                <input type="text" placeholder="이메일" name="userEmail">
+                <input type="file" class="form-control-file" placeholder="이미지" name="userProfile">
                 <button type="button" onclick="checkform()">회원가입</button>
             </form>
         </div>
