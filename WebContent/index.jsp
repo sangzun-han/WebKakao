@@ -5,7 +5,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" class="css">
   <title>카카오톡</title>
   <link rel="stylesheet" href="./resources/css/style.css">
@@ -37,7 +36,7 @@
 	    %>
 	      <div class="friends__section-row">
 	        <img src="./resources/images/avatar.jpg" alt="">
-	        <a href="profile.jsp" class="fiends__section-name">
+	        <a href="./login.jsp" class="fiends__section-name">
 	          로그인을 해주세요.
 	        </a>
 	      </div>
@@ -46,7 +45,7 @@
 	      %>
 	      <div class="friends__section-row">
 	        <img src="./resources/images/avatar.jpg" alt="">
-	        <a href="profile.jssp" class="fiends__section-name">
+	        <a href="./profile.jsp" class="fiends__section-name">
 	        <%	
 		       
 				if (session.getAttribute("userID") != null) {

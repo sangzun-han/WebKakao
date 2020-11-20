@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="user.UserDAO" %>
 <%@ page import="java.io.PrintWriter" %>
+<meta charset="UTF-8">
 <jsp:useBean id="user" class="user.User" scope="application" />
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userName" />

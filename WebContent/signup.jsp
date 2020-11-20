@@ -11,6 +11,9 @@
 </head>
 <body>
     <jsp:include page="header.jsp" />
+    <%
+    	request.setCharacterEncoding("utf-8");
+    %>
     <div class = "signUpContainer">
         <div class = "logo">
             <a href = "signin.jsp"><img src = "./resources/images/LOGO.jpg"></a>

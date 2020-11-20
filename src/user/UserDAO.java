@@ -13,7 +13,7 @@ public class UserDAO {
 	public UserDAO() {
 		try {
 			//직접쿼리는 한글들어감  웹에서 들어갈시 깨짐 -> 
-			String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
+			String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
 			String dbID = "root";
 			String dbPassword = "0000";
 			Class.forName("com.mysql.jdbc.Driver");

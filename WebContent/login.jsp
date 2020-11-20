@@ -16,9 +16,9 @@
 <jsp:include page="header.jsp" />
 <main class="more">
 	<%
+		request.setCharacterEncoding("utf-8");
+
 		String userID = null;
-		String userName = null;
-		String userEmail = null;
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}

@@ -92,12 +92,15 @@
 }
 
 .type-message__input {
-  width: 80%;
+  width: 100%;
   display: flex;
   align-items: center;
   position: relative;
 }
-
+.type-message__input button{
+	width:20%;
+	height:40px;
+}
 .type-message__input input {
   width: 100%;
   padding: 10px;
