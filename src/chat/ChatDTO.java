@@ -6,6 +6,7 @@ public class ChatDTO {
 	String toID;
 	String chatContent;
 	String chatTime;
+	
 	public int getChatID() {
 		return chatID;
 	}

@@ -71,7 +71,7 @@
             </div>
             <div class="profile__action">
                     <span class="profile__action-circle">
-                        <a href=".#"><i class="fa fa-pencil fa-lg"></i></a>
+                        <a href="./profileupdate.jsp"><i class="fa fa-pencil fa-lg"></i></a>
                     </span>
                 <span class="profile__action-title">프로필 수정</span>
             </div>

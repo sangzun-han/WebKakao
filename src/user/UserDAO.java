@@ -22,7 +22,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public int login(String userID, String userPassword) {
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
 		try {
@@ -30,7 +30,7 @@ public class UserDAO {
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getNString(1).equals(userPassword))
+				if (rs.getString(1).equals(userPassword))
 					return 1; // 로그인 성공
 				else
 					return 0; // 비밀번호 틀림
@@ -56,4 +56,26 @@ public class UserDAO {
 		}
 		return -1; //DB 오류
 	}
-}
+	
+	public int profile(String userID, String userProfile) {
+		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,userProfile);
+			pstmt.setString(2,userID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;
+		}
+	}

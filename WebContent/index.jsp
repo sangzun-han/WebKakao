@@ -20,12 +20,6 @@
 		
 	%>
 	<main class="friends">
-	  <div class="search-bar">
-	    <i class="fa fa-search"></i>
-	    <form action="" method="GET">
-	      <input type="search" placeholder="검색">
-	    </form>
-	  </div>
 	  <section class="friends__section">
 	    <header class="friends__section-header">
 	      <h6 class="friends__section-title"></h6>
@@ -72,7 +66,7 @@
 	  </section>
 	  <section class="friends__section">
 	    <header class="friends__section-header">
-	      <h6 class="friends__section-title">친구</h6>
+	      <h6 class="friends__section-title">유저목록</h6>
 	    </header>
 	    <div class="friends__section-rows">
 	      <div class="friends__section-row">
@@ -81,9 +75,10 @@
 	          <span class="friends__section-name">한상준</span>
 	        </div>
 	        <div class="friends__section-tagline">
-	          이거지
-	        </div>
+	          <a href="./chat.jsp">대화하기</a>
+	        </div>  
 	      </div>
+	      
 	    </div>
 	  </section>
 	  <%

@@ -26,23 +26,27 @@
 	%>
 <main class="chat">
     <div class="date-divider">
-        <span class="date-divider__text">Wednesday, August 2, 2017</span>
+        <span class="date-divider__text">2020.11.20</span>
     </div>
-    <div class="chat__message chat__message-from-me">
-        <span class="chat__message-time">17:55</span>
-        <span class="chat__message-body">
-                Hello~! This is my message.
-            </span>
-    </div>
-    <div class="chat__message chat__message--to-me">
-        <img src="./resources/images/avatar.jpg" class="chat__message-avatar">
-        <div class="chat__message-center">
-            <h3 class="chat__message-username">Emma</h3>
-            <span class="chat__message-body">
-                    Reply.
-                </span>
-        </div>
-        <span class="chat__message-time">18:55</span>
+    <div id="fromchatList">
+	    <!--
+	    <div class="chat__message chat__message-from-me">
+	       <span class="chat__message-time">17:55</span>
+	       <span class="chat__message-body">Hello~! This is my message.</span> 
+	    </div>
+	    -->
+ 	</div>
+ 	<div id="tochatList">
+ 	<!-- 
+	    <div class="chat__message chat__message--to-me">
+	        <img src="./resources/images/avatar.jpg" class="chat__message-avatar">
+	        <div class="chat__message-center">
+	            <h3 class="chat__message-username">Emma</h3>
+	            <span class="chat__message-body">Reply.</span>
+	        </div>
+	        <span class="chat__message-time">18:55</span>
+	    </div>
+	 -->
     </div>
 </main>
 <div class="type-message">
@@ -57,9 +61,9 @@
 
 </body>
 	<script type="text/javascript">
-	function submitFunction(){
-		var fromID = '<%=userID%>';
-		var toID = '<%=toID%>';
+	function submitFunction() {
+		var fromID = '<%= userID %>';
+		var toID = '<%= toID %>';
 		var chatContent = $('#chatContent').val();
 		$.ajax({
 			type : 'POST',
@@ -81,5 +85,74 @@
 		});
 		$('#chatContent').val("");
 	}
+	var lastID = 0;
+	function chatListFunction(type) {
+		var fromID = '<%= userID %>';
+		var toID = '<%= toID %>';
+		$.ajax({
+			type:"POST",
+			url : "./chatListServlet",
+			data : {
+				fromID : encodeURIComponent(fromID),
+				toID : encodeURIComponent(toID),
+				chatContent : encodeURIComponent(chatContent),
+				listType: type
+			},
+			success : function(data){
+				if(data == "") 
+					return;
+				var parsed = JSON.parse(data);
+				var result = parsed.result;
+				
+				for(var i = 0; i<result.length; i++){
+					addChat(result[i][0].value, result[i][2].value, result[i][3].value); 
+				}
+				lastID = Number(parsed.last);
+			}
+		});
+	}	
+	function addChat(chatName, chatContent, chatTime){
+			$('#fromchatList').append('<div class="chat__message chat__message-from-me">' +
+					'<span class="chat__message-time">' +
+					chatTime +
+					'</span>' +
+			        '<span class="chat__message-body">' +
+			        chatContent +
+			        '</span>' +
+			        '</div>'
+			        );
+			
+			
+			$('#tochatList').append('<div class="chat__message chat__message--to-me">' +
+					'<img src="./resources/images/avatar.jpg" class="chat__message-avatar">' +
+					'<div class="chat__message-center">' +
+					'<h3 class="chat__message-username">' +
+					'<%= toID %>' +
+					'</h3>' +
+					'<span class="chat__message-body">' +
+					chatContent +
+					'</span>' +
+					'</div>' +
+	        		'<span class="chat__message-time">' +
+	        		chatTime +
+	        		'</span>' +
+	    			'</div>'
+	    			);
+	    	
+			}
+		
+			$('#fromchatList').scrollTop($('#fromchatList')[0].scrollHeight);
+			
+		function getInfiniteChat() {
+			setInterval(function() {
+				chatListFunction(lastID);
+			}, 1000);
+		}
+	</script>
+	<script>
+		$(document).ready(function(){
+			chatListFunction('ten');
+			getInfiniteChat();
+		});
 	</script>
 </html>
