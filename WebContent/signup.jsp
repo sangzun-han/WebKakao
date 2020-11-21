@@ -25,7 +25,6 @@
                 <input type="password" placeholder="비밀번호" name="userPassword" required>
                 <input type="password" placeholder="비밀번호 재입력" name="repassword" required>
                 <input type="text" placeholder="이메일" name="userEmail">
-                <input type="file" class="form-control-file" placeholder="이미지" name="userProfile">
                 <button type="button" onclick="checkform()">회원가입</button>
             </form>
         </div>

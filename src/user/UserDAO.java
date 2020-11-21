@@ -42,14 +42,13 @@ public class UserDAO {
 		return -2; // db오류
 	}
 	public int join(User user) {
-		String SQL = "insert into user values(?, ?, ?, ?, ?)";
+		String SQL = "insert into user values(?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
 			pstmt.setString(3, user.getUserPassword());
 			pstmt.setString(4, user.getUserEmail());
-			pstmt.setString(5, user.getUserProfile());
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

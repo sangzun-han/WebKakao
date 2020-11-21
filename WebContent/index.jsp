@@ -18,6 +18,22 @@
 			userID = (String) session.getAttribute("userID");
 		}
 		
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
+		String dbID = "root";
+		String dbPassword = "0000";
+		
+		String SQL = ("select * from user where userID =?");
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+		PreparedStatement pstmt = conn.prepareStatement(SQL);
+		pstmt.setString(1,userID);
+		ResultSet rs = pstmt.executeQuery();
+		while (rs.next()){
+			String Name = rs.getString("userName");
+			String Profile = rs.getString("userProfile");
 	%>
 	<main class="friends">
 	  <section class="friends__section">
@@ -38,30 +54,14 @@
 	    	} else {
 	      %>
 	      <div class="friends__section-row">
-	        <img src="./resources/images/avatar.jpg" alt="">
+	        <img src="./resources/images/<%= Profile %>" alt="사진">
 	        <a href="./profile.jsp" class="fiends__section-name">
-	        <%	
-		       
-				if (session.getAttribute("userID") != null) {
-					userID = (String) session.getAttribute("userID");
+			<%= Name %>
+			   <%
 				}
-		        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
-				String dbID = "root";
-				String dbPassword = "0000";
-				
-				String SQL = ("select * from user where userID =?");
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1,userID);
-				ResultSet rs = pstmt.executeQuery();
-				while (rs.next()){
-					out.print(rs.getString("userName"));		
-				}	
-			%>
+	          %>
 	        </a>
 	      </div>
-	    
 	    </div>
 	  </section>
 	  <section class="friends__section">
