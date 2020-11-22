@@ -16,7 +16,7 @@
     %>
     <div class = "signUpContainer">
         <div class = "logo">
-            <a href = "signin.jsp"><img src = "./resources/images/LOGO.jpg"></a>
+            <a href = "login.jsp"><img src = "./resources/images/LOGO.jpg"></a>
         </div>
         <div class = "signUpDetail">
             <form name="signupForm" method="POST" action="./signupAction.jsp">
@@ -25,7 +25,7 @@
                 <input type="password" placeholder="비밀번호" name="userPassword" required>
                 <input type="password" placeholder="비밀번호 재입력" name="repassword" required>
                 <input type="text" placeholder="이메일" name="userEmail">
-                <button type="button" onclick="checkform()">회원가입</button>
+                <button type="button" onclick="checkform();">회원가입</button>
             </form>
         </div>
     </div>

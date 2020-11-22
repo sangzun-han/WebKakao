@@ -13,7 +13,7 @@ public class UserDAO {
 	public UserDAO() {
 		try {
 			//직접쿼리는 한글들어감  웹에서 들어갈시 깨짐 -> 
-			String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
+			String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
 			String dbID = "root";
 			String dbPassword = "0000";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -42,7 +42,7 @@ public class UserDAO {
 		return -2; // db오류
 	}
 	public int join(User user) {
-		String SQL = "insert into user values(?, ?, ?, ?)";
+		String SQL = "insert into user values(?, ?, ?, ?, NULL)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -52,9 +52,19 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return -1; //DB 오류
 	}
+
 	
 	public int profile(String userID, String userProfile) {
 		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
