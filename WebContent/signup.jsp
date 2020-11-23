@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
@@ -19,7 +20,7 @@
             <a href = "login.jsp"><img src = "./resources/images/LOGO.jpg"></a>
         </div>
         <div class = "signUpDetail">
-            <form name="signupForm" method="POST" action="./signupAction.jsp">
+            <form name="signupForm" method="GET" action="./signupAction.jsp">
             	<input type="text" placeholder="아이디" name="userID">	
                 <input type="text" placeholder="이름" name="userName" maxlength="10">
                 <input type="password" placeholder="비밀번호" name="userPassword" required>

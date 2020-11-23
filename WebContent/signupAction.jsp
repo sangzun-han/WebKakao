@@ -1,8 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="user.UserDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.*" %>
-<meta charset="UTF-8">
+
 <jsp:useBean id="user" class="user.User" scope="application" />
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userName" />
@@ -11,6 +12,8 @@
 <jsp:setProperty name="user" property="userProfile" />
 
 	<%
+		request.setCharacterEncoding("utf-8");
+	
 		String userID = null;
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");

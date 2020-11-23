@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,9 @@
 		String userID = null;
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
+		} else {
+			out.println("<script> alert('권한이 없습니다')</script>");
+			out.println("<script> history.back() </script>");
 		}
 		String toID = null;
 		if (request.getParameter("toID") != null) {

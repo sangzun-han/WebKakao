@@ -84,17 +84,34 @@
 	    <header class="friends__section-header">
 	      <h6 class="friends__section-title">유저목록</h6>
 	    </header>
+	    <%
+	        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?";
+			String dbID = "root";	
+			String dbPassword = "0000";
+			
+			String SQL = ("select * from user");
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				String Name = rs.getString("userName");
+				String Profile = rs.getString("userProfile");
+				String userId = rs.getString("userID");
+		  %>
 	    <div class="friends__section-rows">
 	      <div class="friends__section-row">
 	        <div class="friends__section-column">
-	          <img src="./resources/images/avatar.jpg">
-	          <span class="friends__section-name">한상준</span>
+	          <img src="./resources/images/<%= Profile %>.jpg">
+	          <span class="friends__section-name"><%= Name %></span>
 	        </div>
 	        <div class="friends__section-tagline">
-	          <a href="./chat.jsp">대화하기</a>
+	          <a href="./chat.jsp?<%= userId %>">대화하기</a>
 	        </div>  
 	      </div>
-	      
+	      <%
+			}
+	      %>
 	    </div>
 	  </section>
 

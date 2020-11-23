@@ -7,7 +7,7 @@ public class User {
 	String userEmail;
 	String userProfile;
 	
-	
+
 	public String getUserID() {
 		return userID;
 	}
@@ -38,6 +38,6 @@ public class User {
 	public void setUserProfile(String userProfile) {
 		this.userProfile = userProfile;
 	}
-	
-	
 }
+
+
