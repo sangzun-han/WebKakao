@@ -19,23 +19,27 @@
 
 	<%
 		String userID = null;
-	
+		
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		} else {
 			out.println("<script> alert('권한이 없습니다')</script>");
 			out.println("<script> history.back() </script>");
 		}
+		
 		String toID = null;
+		
 		if (request.getParameter("toID") != null) {
 			toID = (String) request.getParameter("toID");
 		}
 		
-		if (userID.equals(URLDecoder.decode(toID, "utf-8"))){
+		if (userID==toID){
 			out.println("<script> alert('자기자신과는 채팅할 수 없습니다.')</script>");
 			out.println("<script> history.back() </script>");
 			return;
 		}
+	
+		
 		String fromProfile = new UserDAO().getProfile(userID);
 		String toProfile = new UserDAO().getProfile(toID);
 	%>
@@ -53,7 +57,7 @@
  	</div>
  	<div id="tochatList">
  	<!-- 
-	    <div class="chat__message chat__message--to-me">
+	   <div class="chat__message chat__message--to-me">
 	        <img src="./resources/images/avatar.jpg" class="chat__message-avatar">
 	        <div class="chat__message-center">
 	            <h3 class="chat__message-username">Emma</h3>
@@ -63,13 +67,15 @@
 	    </div>
 	 -->
     </div>
-</main>
-<div class="type-message">
+    <div class="type-message">
     <div class="type-message__input">
         <input type="text" id="chatContent">
         <button type="button" onclick="submitFunction();">전송</button>
     </div>
 </div>
+</main>
+
+
 <div class="bigScreenText">
     <span>브라우저의 가로폭을 줄여주세요!</span>
 </div>
