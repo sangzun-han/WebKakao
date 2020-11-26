@@ -1,5 +1,7 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +19,7 @@
 
 	<%
 		String userID = null;
+	
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		} else {
@@ -27,6 +30,14 @@
 		if (request.getParameter("toID") != null) {
 			toID = (String) request.getParameter("toID");
 		}
+		
+		if (userID.equals(URLDecoder.decode(toID, "utf-8"))){
+			out.println("<script> alert('자기자신과는 채팅할 수 없습니다.')</script>");
+			out.println("<script> history.back() </script>");
+			return;
+		}
+		String fromProfile = new UserDAO().getProfile(userID);
+		String toProfile = new UserDAO().getProfile(toID);
 	%>
 <main class="chat">
     <div class="date-divider">
@@ -109,6 +120,9 @@
 				var result = parsed.result;
 				
 				for(var i = 0; i<result.length; i++){
+					if(result[i][0].value == fromID) {
+						result[i][0].value = '나';
+					}
 					addChat(result[i][0].value, result[i][2].value, result[i][3].value); 
 				}
 				lastID = Number(parsed.last);
@@ -116,22 +130,12 @@
 		});
 	}	
 	function addChat(chatName, chatContent, chatTime){
-			$('#fromchatList').append('<div class="chat__message chat__message-from-me">' +
-					'<span class="chat__message-time">' +
-					chatTime +
-					'</span>' +
-			        '<span class="chat__message-body">' +
-			        chatContent +
-			        '</span>' +
-			        '</div>'
-			        );
-			
-			
+		 if (chatName == '나') {
 			$('#tochatList').append('<div class="chat__message chat__message--to-me">' +
-					'<img src="./resources/images/avatar.jpg" class="chat__message-avatar">' +
+					'<img src="<%= fromProfile %>" class="chat__message-avatar">' +
 					'<div class="chat__message-center">' +
 					'<h3 class="chat__message-username">' +
-					'<%= toID %>' +
+					chatName +
 					'</h3>' +
 					'<span class="chat__message-body">' +
 					chatContent +
@@ -142,15 +146,30 @@
 	        		'</span>' +
 	    			'</div>'
 	    			);
-	    	
+			} else {
+				$('#tochatList').append('<div class="chat__message chat__message--to-me">' +
+						'<img src="<%= toProfile %>" class="chat__message-avatar">' +
+						'<div class="chat__message-center">' +
+						'<h3 class="chat__message-username">' +
+						chatName +
+						'</h3>' +
+						'<span class="chat__message-body">' +
+						chatContent +
+						'</span>' +
+						'</div>' +
+		        		'<span class="chat__message-time">' +
+		        		chatTime +
+		        		'</span>' +
+		    			'</div>'
+		    			);
 			}
-		
+	}
 			$('#fromchatList').scrollTop($('#fromchatList')[0].scrollHeight);
 			
 		function getInfiniteChat() {
 			setInterval(function() {
 				chatListFunction(lastID);
-			}, 1000);
+			}, 2000);
 		}
 	</script>
 	<script>

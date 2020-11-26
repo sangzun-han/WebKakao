@@ -66,13 +66,19 @@ public class UserDAO {
 	}
 
 	
-	public int profile(String userID, String userProfile) {
-		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+	public String getProfile(String userID) {
+		String SQL = "SELECT userProfile FROM USER WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,userProfile);
-			pstmt.setString(2,userID);
-			return pstmt.executeUpdate();
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				while (rs.next()) {
+					String Profile = rs.getString("userProfile");
+				}
+			} else {
+				return "C://Users//zzun//eclipse-workspace//Webkakao//WebContent//resources//images/avater.jpg";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -81,10 +87,12 @@ public class UserDAO {
 					pstmt.close();
 				if (conn != null)
 					conn.close();
+				if (rs != null)
+					rs.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			return -1;
-		}
+		return "C://Users//zzun//eclipse-workspace//Webkakao//WebContent//resources//images/avater.jpg";
 	}
+}

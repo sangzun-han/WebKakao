@@ -102,11 +102,22 @@
 	    <div class="friends__section-rows">
 	      <div class="friends__section-row">
 	        <div class="friends__section-column">
-	          <img src="./resources/images/<%= Profile %>.jpg">
+	        <%
+	      		if (Profile==null) {
+	      	%>
+	      	  <img src="./resources/images/avatar.jpg" alt="">
+	      	  <span class="friends__section-name"><%= Name %></span>
+	      	<%
+	      		} else {
+	      	%>
+	          <img src="./resources/images/<%= Profile %>">
 	          <span class="friends__section-name"><%= Name %></span>
+	        <%
+	      	}
+	        %>
 	        </div>
 	        <div class="friends__section-tagline">
-	          <a href="./chat.jsp?<%= userId %>">대화하기</a>
+	          <a href="./chat.jsp?toID=<%= userId %>">대화하기</a>
 	        </div>  
 	      </div>
 	      <%

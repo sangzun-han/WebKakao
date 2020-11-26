@@ -39,10 +39,10 @@ public class ChatDAO {
 			while (rs.next()) {
 				ChatDTO chat = new ChatDTO();
 				chat.setChatID(rs.getInt("chatID"));
-				chat.setFromID(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				chat.setToID(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				chat.setChatContent(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11,13));
+				chat.setFromID(rs.getString("fromID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
 				String timeType ="오전";
 				if (chatTime > 12) {
 					timeType = "오후";
@@ -70,23 +70,27 @@ public class ChatDAO {
 	
 	public ArrayList<ChatDTO> getChatListByRecent(String fromID, String toID, int number) {
 		ArrayList<ChatDTO> chatList = null;
-		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID=?) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT) ORDER BY chatTime";
+		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE(fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
 			pstmt.setString(2, toID);
 			pstmt.setString(3, toID);
 			pstmt.setString(4, fromID);
-			pstmt.setInt(5,number);
+			pstmt.setInt(5, number);
+			pstmt.setString(6, fromID);
+			pstmt.setString(7, toID);
+			pstmt.setString(8, toID);
+			pstmt.setString(9, fromID);
 			rs = pstmt.executeQuery();
 			chatList = new ArrayList<ChatDTO>();
-			while (rs.next()) {
+			while(rs.next()) {
 				ChatDTO chat = new ChatDTO();
 				chat.setChatID(rs.getInt("chatID"));
-				chat.setFromID(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				chat.setToID(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				chat.setChatContent(rs.getString("chatContent").replaceAll(" ","&nbsp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll("\n", "<br>"));
-				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11,13));
+				chat.setFromID(rs.getString("fromID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&rt;").replaceAll("\n", "<br>"));
+				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
 				String timeType ="오전";
 				if (chatTime > 12) {
 					timeType = "오후";
