@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="user.UserDAO" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +19,12 @@
 <body>
 <jsp:include page="header.jsp" />
 
+
+
 	<%
+		Date nowTime = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy.MM.dd");
+		
 		String userID = null;
 		
 		if (session.getAttribute("userID") != null) {
@@ -45,7 +52,7 @@
 	%>
 <main class="chat">
     <div class="date-divider">
-        <span class="date-divider__text">2020.11.20</span>
+        <span class="date-divider__text"><%= sf.format(nowTime) %></span>
     </div>
     <div id="fromchatList">
 	    <!--
@@ -95,13 +102,7 @@
 				chatContent : encodeURIComponent(chatContent)
 			},
 			success: function(result){
-				if(result == 1) {
-					alert('성공');
-			} else if(result == 0){
-					alert('오류');
-				}else{
-					alert('실패');
-				}
+				
 			}
 		});
 		$('#chatContent').val("");
@@ -170,12 +171,12 @@
 		    			);
 			}
 	}
-			$('#fromchatList').scrollTop($('#fromchatList')[0].scrollHeight);
+			$('#tochatList').scrollTop($('#tochatList')[0].scrollHeight);
 			
 		function getInfiniteChat() {
 			setInterval(function() {
 				chatListFunction(lastID);
-			}, 2000);
+			}, 1000);
 		}
 	</script>
 	<script>

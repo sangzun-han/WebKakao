@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("hh:mm");
+%>
 <header class="top-header">
     <div class="header__top">
         <div class="header__column">
@@ -6,7 +12,7 @@
             <i class="fa fa-wifi"></i>
         </div>
         <div class="header__column">
-            <span class="header__time">12:45</span>
+            <span class="header__time"><%= sf.format(nowTime) %></span>
         </div>
         <div class="header__column">
             <i class="fa fa-moon-o"></i>
