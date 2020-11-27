@@ -3,9 +3,27 @@
   position: relative;
 }
 
+.search-bar form{
+	display: flex;
+    justify-content: center;
+}
 .search-bar input[type="text"] {
-  width: 100%;
+  width: 80%;
   padding: 5px 7px;
+  box-sizing: border-box;
+  border: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: #f1f2f3;
+  font-size: 13px;
+  text-align: center;
+  transition: border-color .2s linear;
+  margin-right:5px;
+}
+
+.search-bar input[type="button"] {
+  width: 40px;
+  padding: 4px;
   box-sizing: border-box;
   border: 0;
   border: 1px solid transparent;

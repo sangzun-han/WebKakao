@@ -4,7 +4,7 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.*" %>
 
-<jsp:useBean id="user" class="user.User" scope="application" />
+<jsp:useBean id="user" class="user.UserDTO" scope="application" />
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userName" />
 <jsp:setProperty name="user" property="userPassword" />

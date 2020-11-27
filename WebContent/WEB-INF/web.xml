@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 	<display-name>Webkakao</display-name>
-
     <servlet>
 	  	<servlet-name>ChatSubmitServlet</servlet-name>
 	  	<servlet-class>chat.ChatSubmitServlet</servlet-class>
