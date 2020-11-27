@@ -13,7 +13,7 @@
 
 .chat {
   background-color: #a1c0d6;
-  height: 100vh;
+  height: 1000vh;
   padding-top: 15px;
 }
 
@@ -77,7 +77,7 @@
 .type-message {
   width: 100%;
   bottom: 0;
-  position: relative;
+  position: fixed;
   height: 45px;
   background: #eeeeee;
   display: flex;

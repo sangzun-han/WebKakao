@@ -1,5 +1,7 @@
+<%@ page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +19,7 @@
 <jsp:include page="header.jsp" />
 <%
 	String userID = null;
+	
 	if (session.getAttribute("userID") != null) {
 		userID = (String) session.getAttribute("userID");
 	}
@@ -26,28 +29,49 @@
 		response.sendRedirect("login.jsp");
 		return;
 	}
+	
+	String toID = null;
+	
+	if (request.getParameter("toID") != null) {
+		toID = (String) request.getParameter("toID");
+	}
+	
+	String toProfile = new UserDAO().getProfile(toID);
 %>
 <main class="chats">
-    <div class="search-bar">
-        <i class="fa fa-search"></i>
-        <form action="#" method="GET">
-            <input type="text" id="findID" placeholder="친구이름을 입력해주세요">
-         </form>
-    </div>
+	 	<%
+	 		String dbURL = "jdbc:mysql://localhost:3306/Webkakao?";
+			String dbID = "root";	
+			String dbPassword = "0000";
+						
+			String SQL = ("select * from (select *from chat where toID = ? order by chatTime desc limit 10) a group by fromID;");
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,userID);
+			ResultSet rs = pstmt.executeQuery();
+				while (rs.next()){
+					String fromID = rs.getString("fromID");
+					String chatContent = rs.getString("chatContent");
+					String chatTime = rs.getString("chatTime");				
+		%>
     <ul class="chats__list">
         <li class="chats__chat" id="friendResult">
-            <a href="chat.jsp">
+            <a href="./chat.jsp?toID=<%= fromID %>">
                 <div class="chat__content">
-                    <img src="./resources/images/avatar.jpg">
+                    <img src="<%= toProfile %>">
                     <div class="chat__preview">
-                        <h3 class="chat__user">한상준</h3>
-                        <span class="chat__last-message">:)</span>
+                        <h3 class="chat__user"><%= fromID %></h3>
+                        <span class="chat__last-message"><%= chatContent %></span>
                     </div>
                 </div>
-                <span class="chat__date-time">14:40</span>
+           		 <span class="chat__date-time"><%= chatTime %></span>
             </a>
         </li>
     </ul>
+    <%
+		}
+    %>
     <div class="chat-btn">
         <i class="fa fa-comment"></i>
     </div>

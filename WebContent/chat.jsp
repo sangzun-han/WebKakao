@@ -74,13 +74,14 @@
 	    </div>
 	 -->
     </div>
+</main>
     <div class="type-message">
     <div class="type-message__input">
         <input type="text" id="chatContent">
         <button type="button" onclick="submitFunction();">전송</button>
     </div>
 </div>
-</main>
+
 
 
 <div class="bigScreenText">

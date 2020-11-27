@@ -1,4 +1,4 @@
-@media screen and (min-width: 580px) {
+@media screen and (min-width: 1024px) {
   .bigScreenText {
     display: flex;
   }
