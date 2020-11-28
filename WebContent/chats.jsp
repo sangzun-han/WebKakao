@@ -33,13 +33,8 @@
 		return;
 	}
 	
-	String toID = null;
 	
-	if (request.getParameter("toID") != null) {
-		toID = (String) request.getParameter("toID");
-	}
-	
-	String toProfile = new UserDAO().getProfile(toID); //유저 프로필
+	String Profile = new ChatDAO().chatgetProfile(userID); //유저 프로필
 	ArrayList<ChatDTO> getLastChat = new ChatDAO().getLastChat(userID); // 모든 유저정보
 %>
 <main class="chats">
@@ -50,12 +45,12 @@
         <li class="chats__chat">
             <a href="./chat.jsp?toID=<%= getLastChat.get(i).getFromID() %>">
                 <div class="chat__content">
-                    <img src="<%= toProfile %>">
+                    <img src="<%= Profile %>">
                     <div class="chat__preview">
                         <h3 class="chat__user"><%= getLastChat.get(i).getFromID() %></h3>
                         <span class="chat__last-message"><%= getLastChat.get(i).getChatContent() %></span>
                     </div>
-                </div>
+                </div>	
            		 <span class="chat__date-time"><%= getLastChat.get(i).getChatTime() %></span>
             </a>
         </li>

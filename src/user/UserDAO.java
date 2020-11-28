@@ -73,7 +73,7 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				if (rs.getString("userProfile").equals("NULL"))
 					return "./resources/images/avatar.jpg";
 				else 

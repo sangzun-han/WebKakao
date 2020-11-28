@@ -19,19 +19,12 @@
 	<%
 		request.setCharacterEncoding("utf-8");
 		
-		String toID = null;
-			
-		if (request.getParameter("toID") != null) {
-			toID = (String) request.getParameter("toID");
-		}
-		
 		String userID = null;
+		
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		
-		String toProfile = new UserDAO().getProfile(toID);
-		
+				
 		ArrayList<UserDTO> Specificuser = new UserDAO().getSpecificUserInfo(userID); //내 정보
 		ArrayList<UserDTO> Userinfo = new UserDAO().getUserInfo(); // 모든 유저정보
 	%>
@@ -144,19 +137,23 @@
 		var userID = $('#findID').val();
 		$.ajax({
 			type : 'POST',
-			url : './UserCheck',
+			url : './UserFindServlet',
 			data : { userID : userID },
 			success : function(result){
-				if(result==0){
-					getFriend(userID);
-				} else {
+				if (result == -1){
 					failFriend();
 				}
-			}
-		});
+				else{
+					var data = JSON.parse(result);
+					var profile = data.userProfile;
+					getFriend(userID, profile);	
+				} 
+					
+				}
+			});
 	}
-	function getFriend(findID) {
-			$('#friendResult').html('<img src="<%= toProfile %>">' +
+	function getFriend(findID,userProfile) {
+			$('#friendResult').html('<img src="' + userProfile + '">' +
 				'<span class="friends__section-name">' +
 				findID +
 				'</span>' +

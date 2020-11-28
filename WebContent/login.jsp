@@ -65,7 +65,17 @@
 			%>
         <header class="more__header">
         <div class="more-header__column">
+        <%
+        	if(Specificuser.get(i).getUserProfile() == null) {
+        %>
         	<img src="./resources/images/avatar.jpg">
+        	<%
+        		} else {
+        	%>
+        		<img src="./resources/images/<%= Specificuser.get(i).getUserProfile() %>">
+        	<%
+        		}
+        	%>
            	<div class="more-header__info">
 	           	<h3 class="more-header__title"><%= Specificuser.get(i).getUserName() %></h3>
 	           	<span class="more-header__subtitle"><%= Specificuser.get(i).getUserEmail() %></span>

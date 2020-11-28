@@ -40,10 +40,18 @@
        	%>
        	<%
        		for (int i=0; i<Specificuser.size(); i++){
+       			if (Specificuser.get(i).getUserProfile() == null) {
        	%>
 	     	<img src="./resources/images/avatar.jpg" alt="">
 	        <h3 class="profile__header-title"><%= Specificuser.get(i).getUserName() %></h3>
         </div>
+        <%
+       		} else {
+       	%>		<img src="./resources/images/<%= Specificuser.get(i).getUserProfile() %>" alt="">
+    	        <h3 class="profile__header-title"><%= Specificuser.get(i).getUserName() %></h3>
+        <%
+       		}
+        %>
     </header>
     <div class="profile__container">
         <input type="text" placeholder="<%= Specificuser.get(i).getUserEmail() %>">
