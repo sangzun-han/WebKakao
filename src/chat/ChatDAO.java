@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import user.UserDTO;
+
 public class ChatDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -139,5 +141,36 @@ public class ChatDAO {
 			}
 		}
 			return -1; // 데이터베이스 오류
+	}
+	
+	public ArrayList<ChatDTO> getLastChat (String fromID) {
+		String SQL = ("select * from (select *from chat where toID = ? order by chatTime desc limit 10) a group by fromID;");
+		ArrayList<ChatDTO> list = new ArrayList<ChatDTO>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,fromID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				ChatDTO chat = new ChatDTO();
+				chat.setFromID(rs.getString("fromID"));
+				chat.setChatContent(rs.getString("chatContent"));
+				chat.setChatTime(rs.getString("chatTime"));
+				list.add(chat);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return list;
 	}
 }

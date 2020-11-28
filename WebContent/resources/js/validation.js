@@ -20,6 +20,6 @@ function checkform() {
     if (!regExp.test(password.value)){
         alert("영문, 숫자, 특수문자를 포함해 8자리이상 입력하세요.");
         return false;
-    }
+	    }
     form.submit();
 }

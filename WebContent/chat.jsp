@@ -18,9 +18,6 @@
 
 <body>
 <jsp:include page="header.jsp" />
-
-
-
 	<%
 		Date nowTime = new Date();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy.MM.dd");

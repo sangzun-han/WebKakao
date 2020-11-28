@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="user.UserDAO" %>
+<%@ page import="user.UserDTO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +31,9 @@
 		}
 		
 		String toProfile = new UserDAO().getProfile(toID);
+		
+		ArrayList<UserDTO> Specificuser = new UserDAO().getSpecificUserInfo(userID); //내 정보
+		ArrayList<UserDTO> Userinfo = new UserDAO().getUserInfo(); // 모든 유저정보
 	%>
 	<div class="search-bar">
         <form action="#" method="POST">
@@ -41,7 +46,7 @@
 	    <header class="friends__section-header">
 	      <h6 class="friends__section-title"></h6>
 	    </header>
-	    <div class="friends__section-rows">
+	    <div class="friends__section-rows">	
 	    <%	
 	    	if (userID == null) {	
 	    %>
@@ -52,36 +57,21 @@
 	      <%
 	    	} else {	
 	      %>
-	      <%
-	        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?";
-			String dbID = "root";	
-			String dbPassword = "0000";
-			
-			String SQL = ("select * from user where userID =?");
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,userID);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()){
-				String Name = rs.getString("userName");
-				String Profile = rs.getString("userProfile");
-		  %>
 	      <div class="friends__section-row">
 	      	<%
-	      		if (Profile==null) {
+	      		for (int i=0; i<Specificuser.size(); i++){
+	      			if (Specificuser.get(i).getUserProfile()==null) {
 	      	%>
 	      	<img src="./resources/images/avatar.jpg" alt=""> 
 	      	<a href="./profile.jsp" class="fiends__section-name">
-			<%= Name %>	
+			<%= Specificuser.get(i).getUserID() %>	
 	      	<%
 	      		} else {
 	      	%>
 	      	</a>
-	      
-	        <img src="./resources/images/<%= Profile %>" alt="사진">
+	        <img src="./resources/images/<%= Specificuser.get(i).getUserProfile() %>" alt="사진">
 	        <a href="./profile.jsp" class="fiends__section-name">
-			<%= Name %>	
+			<%= Specificuser.get(i).getUserID() %>	
 			<%
 	    		}
 			%>
@@ -113,45 +103,38 @@
 	      <h6 class="friends__section-title">유저목록</h6>
 	    </header>
 	    <%
-	        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?";
-			String dbID = "root";	
-			String dbPassword = "0000";
-			
-			String SQL = ("select * from user");
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()){
-				String Name = rs.getString("userName");
-				String Profile = rs.getString("userProfile");
-				String userId = rs.getString("userID");
-		  %>
+	    	for (int i=0; i<Userinfo.size(); i++){
+	    		if (Userinfo.get(i).getUserProfile()==null) {
+	    %>
 	    <div class="friends__section-rows">
 	      <div class="friends__section-row">
 	        <div class="friends__section-column">
-	        <%
-	      		if (Profile==null) {
-	      	%>
 	      	  <img src="./resources/images/avatar.jpg" alt="">
-	      	  <span class="friends__section-name"><%= Name %></span>
+	      	  <span class="friends__section-name"><%= Userinfo.get(i).getUserID() %></span>
+	      	
 	      	<%
 	      		} else {
 	      	%>
-	          <img src="./resources/images/<%= Profile %>">
-	          <span class="friends__section-name"><%= Name %></span>
+	      	<div class="friends__section-rows">
+	      		<div class="friends__section-row">
+	        		<div class="friends__section-column">
+	          			<img src="./resources/images/<%= Userinfo.get(i).getUserProfile() %>">
+	          			<span class="friends__section-name"><%= Userinfo.get(i).getUserID() %></span>
 	        <%
-	      	}
+	      		}
 	        %>
 	        </div>
 	        <div class="friends__section-tagline">
-	          <a href="./chat.jsp?toID=<%= userId %>">대화하기</a>
+	          <a href="./chat.jsp?toID=<%= Userinfo.get(i).getUserID() %>">대화하기</a>
 	        </div>  
+	      			</div>
+	      		</div>
+	     	</div>
 	      </div>
-	      <%
+	    </div> 
+	       <%
 			}
 	      %>
-	    </div>
 	  </section>
 	  <jsp:include page="footer.jsp" />
 	</main>
@@ -173,17 +156,18 @@
 		});
 	}
 	function getFriend(findID) {
-		$('#friendResult').html('<img src="./resources/images/avatar.jpg">' +
-			'<span class="friends__section-name">' +
-			findID +
-			'</span>' +
-			'</div>' +
-			'<div class="friends__section-tagline" style="margin-left:8px;">' +
-			'<a href="./chat.jsp?toID=' + encodeURIComponent(findID) + '">' +
-			'대화하기' +
-			'</a>' +
-			'</div>'
-			);
+			$('#friendResult').html('<img src="<%= toProfile %>">' +
+				'<span class="friends__section-name">' +
+				findID +
+				'</span>' +
+				'</div>' +
+				'<div class="friends__section-tagline" style="margin-left:8px;">' +
+				'<a href="./chat.jsp?toID=' + encodeURIComponent(findID) + '">' +
+				'대화하기' +
+				'</a>' +
+				'</div>'
+				);
+		
 	}
 	function failFriend() {
 		alert("검색한 친구가 존재하지 않습니다.")

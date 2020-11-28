@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="user.UserDTO" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,11 +20,12 @@
 <jsp:include page="header.jsp" />
 	<%
 		String userID = null;
-		String userEmail = null;
+
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		
+
+		ArrayList<UserDTO> Specificuser = new UserDAO().getSpecificUserInfo(userID); //내 정보
 	%>
 <main class="profile">
     <header class="profile__header">
@@ -30,39 +34,25 @@
         	if (userID == null) {
         		out.println("<script>alert('권한이 없습니다.');</script>");
         		out.println("<script>history.back();</script>");
-        %>
-            
+        %>   
         <%
         	} else {
        	%>
        	<%
-			if (session.getAttribute("userID") != null) {
-				userID = (String) session.getAttribute("userID");
-			}
-	        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
-			String dbID = "root";
-			String dbPassword = "0000";
-			
-			String SQL = ("select * from user where userID =?");
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,userID);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()){	
-	     %>
+       		for (int i=0; i<Specificuser.size(); i++){
+       	%>
 	     	<img src="./resources/images/avatar.jpg" alt="">
-	        <h3 class="profile__header-title"><%= rs.getString("userName") %></h3>
+	        <h3 class="profile__header-title"><%= Specificuser.get(i).getUserName() %></h3>
         </div>
     </header>
     <div class="profile__container">
-        <input type="text" placeholder=<%= rs.getString("userEmail") %> >
-	         <%
-	        	}
-	         %>
-         <%
+        <input type="text" placeholder="<%= Specificuser.get(i).getUserEmail() %>">
+	        <%
+	       		}
+	        %>
+        <%
         	}
-         %>
+        %>
         <div class="profile__actions">
         <form action="./profileupdateAction.jsp" method="POST" enctype="multipart/form-data">
            <input type="file" name="userProfile" id="userProfile"/>

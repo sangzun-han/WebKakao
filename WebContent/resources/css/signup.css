@@ -65,3 +65,21 @@
     cursor: pointer;
     margin-top: 20px;
 }
+.find_lang {
+	color:transparent;
+}
+.language{
+	font-size:14px;
+	color:black;
+}
+.find_lang{
+	color:transparent;
+}
+
+.lang{
+	display: flex;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    width: 320px;
+    margin: 0 auto;
+}

@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="user.UserDAO" %>
+<%@ page import="chat.ChatDAO" %>
+<%@ page import="chat.ChatDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,36 +39,24 @@
 		toID = (String) request.getParameter("toID");
 	}
 	
-	String toProfile = new UserDAO().getProfile(toID);
+	String toProfile = new UserDAO().getProfile(toID); //유저 프로필
+	ArrayList<ChatDTO> getLastChat = new ChatDAO().getLastChat(userID); // 모든 유저정보
 %>
 <main class="chats">
-	 	<%
-	 		String dbURL = "jdbc:mysql://localhost:3306/Webkakao?";
-			String dbID = "root";	
-			String dbPassword = "0000";
-						
-			String SQL = ("select * from (select *from chat where toID = ? order by chatTime desc limit 10) a group by fromID;");
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,userID);
-			ResultSet rs = pstmt.executeQuery();
-				while (rs.next()){
-					String fromID = rs.getString("fromID");
-					String chatContent = rs.getString("chatContent");
-					String chatTime = rs.getString("chatTime");				
-		%>
+	<%
+		for (int i=0; i<getLastChat.size(); i++){
+	%>
     <ul class="chats__list">
-        <li class="chats__chat" id="friendResult">
-            <a href="./chat.jsp?toID=<%= fromID %>">
+        <li class="chats__chat">
+            <a href="./chat.jsp?toID=<%= getLastChat.get(i).getFromID() %>">
                 <div class="chat__content">
                     <img src="<%= toProfile %>">
                     <div class="chat__preview">
-                        <h3 class="chat__user"><%= fromID %></h3>
-                        <span class="chat__last-message"><%= chatContent %></span>
+                        <h3 class="chat__user"><%= getLastChat.get(i).getFromID() %></h3>
+                        <span class="chat__last-message"><%= getLastChat.get(i).getChatContent() %></span>
                     </div>
                 </div>
-           		 <span class="chat__date-time"><%= chatTime %></span>
+           		 <span class="chat__date-time"><%= getLastChat.get(i).getChatTime() %></span>
             </a>
         </li>
     </ul>

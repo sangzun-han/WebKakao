@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class UserDAO {
 	private Connection conn;
@@ -96,6 +97,7 @@ public class UserDAO {
 	}
 	
 	public int registerCheck(String userID) {
+
 		String SQL = "SELECT * FROM USER WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
@@ -120,4 +122,90 @@ public class UserDAO {
 		}
 		return -1; //DB오류
 	}
+	
+	public ArrayList<UserDTO> getSpecificUserInfo (String userID) {
+		String SQL = ("select * from user where userID =?");
+		ArrayList<UserDTO> list = new ArrayList<UserDTO>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,userID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				UserDTO user = new UserDTO();
+				user.setUserID(rs.getString("userID"));
+				user.setUserName(rs.getString("userName"));
+				user.setUserEmail(rs.getString("userEmail"));
+				user.setUserProfile(rs.getString("userProfile"));
+				list.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return list;
+	}
+	
+	public ArrayList<UserDTO> getUserInfo () {
+		String SQL = ("select * from user");
+		ArrayList<UserDTO> list = new ArrayList<UserDTO>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				UserDTO user = new UserDTO();
+				user.setUserID(rs.getString("userID"));
+				user.setUserName(rs.getString("userName"));
+				user.setUserEmail(rs.getString("userEmail"));
+				user.setUserProfile(rs.getString("userProfile"));
+				list.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return list;
+	}
+	
+	public int updateProfile(String userID, String userProfile) {
+		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,userProfile);
+			pstmt.setString(2,userID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return -1; //DB 오류
+	}
 }
+	

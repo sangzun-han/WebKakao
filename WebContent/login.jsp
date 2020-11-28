@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="user.UserDTO" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +25,8 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
+		
+		ArrayList<UserDTO> Specificuser = new UserDAO().getSpecificUserInfo(userID); //내 정보
 	%>
     	<%
         	if (userID == null) {		
@@ -56,38 +60,24 @@
         	<%
         		} else {
         	%>
-        	<%	  
-				if (session.getAttribute("userID") != null) {
-					userID = (String) session.getAttribute("userID");
-				}
-		        String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=yes&amp;characterEncoding=UTF-8";
-				String dbID = "root";
-				String dbPassword = "0000";
-				
-				String SQL = ("select * from user where userID =?");
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1,userID);
-				ResultSet rs = pstmt.executeQuery();
-				while (rs.next()){
-					
-				%>
+        	<%
+        		for (int i=0; i<Specificuser.size(); i++){
+			%>
         <header class="more__header">
         <div class="more-header__column">
         	<img src="./resources/images/avatar.jpg">
            	<div class="more-header__info">
-	           	<h3 class="more-header__title"><%= rs.getString("userName") %></h3>
-	           	<span class="more-header__subtitle"><%= rs.getString("userEmail") %></span>
+	           	<h3 class="more-header__title"><%= Specificuser.get(i).getUserName() %></h3>
+	           	<span class="more-header__subtitle"><%= Specificuser.get(i).getUserEmail() %></span>
            	</div>
    		</div>
-		   		<%
-					}
-		   		%>
+		   	<%
+				}
+		   	%>
         <a class="logout" href="./logout.jsp"><span class="logout_font">로그아웃</span></a>
-        	<%
-        		}
-        	%>
+        <%
+        	}
+        %>
         </header>
 </main>
 <jsp:include page="footer.jsp" />
