@@ -68,12 +68,12 @@ public class UserDAO {
 
 	
 	public String getProfile(String userID) {
-		String SQL = "SELECT *FROM USER WHERE userID = ?";
+		String SQL = "SELECT *FROM USER WHERE userID != ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				if (rs.getString("userProfile").equals("NULL"))
 					return "./resources/images/avatar.jpg";
 				else 

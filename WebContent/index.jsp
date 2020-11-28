@@ -19,18 +19,13 @@
 	<%
 		request.setCharacterEncoding("utf-8");
 		
-		String toID = null;
-			
-		if (request.getParameter("toID") != null) {
-			toID = (String) request.getParameter("toID");
-		}
-		
 		String userID = null;
+		
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
 		
-		String toProfile = new UserDAO().getProfile(toID);
+		String toProfile = new UserDAO().getProfile(userID);
 		
 		ArrayList<UserDTO> Specificuser = new UserDAO().getSpecificUserInfo(userID); //내 정보
 		ArrayList<UserDTO> Userinfo = new UserDAO().getUserInfo(); // 모든 유저정보
