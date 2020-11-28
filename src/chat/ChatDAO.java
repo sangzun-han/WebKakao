@@ -144,34 +144,6 @@ public class ChatDAO {
 	}
 	
 	
-	public String chatgetProfile(String fromID) {
-		String SQL = "select *from chat inner join user on user.userID=chat.toID and fromID= ? ORDER BY chatID DESC;";
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, fromID);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				if (rs.getString("userProfile").equals("NULL"))
-					return "./resources/images/avatar.jpg";
-				else 
-					return "./resources/images/" + rs.getString("userProfile");
-				}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-				if (rs != null)
-					rs.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		return "./resources/images/avatar.jpg";
-	}
 	
 	public ArrayList<ChatDTO> getLastChat (String fromID) {
 		String SQL = ("select * from (select *from chat where toID = ? order by chatTime desc limit 10) a group by fromID;");
@@ -202,5 +174,34 @@ public class ChatDAO {
 				}
 			}
 		return list;
+	}
+	
+	public String chatgetProfile(String userID) {
+		String SQL = "select *from chat inner join user on user.userID=chat.fromID and toID= ?;";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString("userProfile").equals("NULL"))
+					return "./resources/images/avatar.jpg";
+				else 
+					return "./resources/images/" + rs.getString("userProfile");
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return "./resources/images/avatar.jpg";
 	}
 }
