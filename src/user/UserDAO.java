@@ -68,7 +68,7 @@ public class UserDAO {
 
 	
 	public String getProfile(String userID) {
-		String SQL = "SELECT *FROM USER WHERE userID != ?";
+		String SQL = "SELECT *FROM USER WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
