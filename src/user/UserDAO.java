@@ -10,13 +10,18 @@ public class UserDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-
+	/* 
+	String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
+	String dbID = "root";
+	String dbPassword = "0000";
+	 */
+	
 	public UserDAO() {
 		try {
 			//직접쿼리는 한글들어감  웹에서 들어갈시 깨짐 -> 
-			String dbURL = "jdbc:mysql://localhost:3306/Webkakao?useUnicode=true&characterEncoding=UTF-8";
-			String dbID = "root";
-			String dbPassword = "0000";
+			String dbURL = "jdbc:mysql://jspdb.ca9opcv9urn1.us-east-2.rds.amazonaws.com:3306/webkakao";
+			String dbID = "admin";
+			String dbPassword = "han2187979";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
@@ -25,7 +30,7 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		String SQL = "select userPassword from user where userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -68,7 +73,7 @@ public class UserDAO {
 
 	
 	public String getProfile(String userID) {
-		String SQL = "SELECT *FROM USER WHERE userID = ?";
+		String SQL = "SELECT *FROM user WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -98,7 +103,7 @@ public class UserDAO {
 	
 	public int registerCheck(String userID) {
 
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM user WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -187,7 +192,7 @@ public class UserDAO {
 	}
 	
 	public int updateProfile(String userID, String userProfile) {
-		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+		String SQL = "UPDATE user SET userProfile = ? WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1,userProfile);

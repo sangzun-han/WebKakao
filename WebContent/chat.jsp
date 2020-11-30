@@ -36,12 +36,7 @@
 		if (request.getParameter("toID") != null) {
 			toID = (String) request.getParameter("toID");
 		}
-		
-		if (userID.equals(toID)){
-			out.println("<script> alert('자기자신과는 채팅할 수 없습니다.')</script>");
-			out.println("<script> history.back() </script>");
-			return;
-		}
+			
 			
 		String fromProfile = new UserDAO().getProfile(userID);
 		String toProfile = new UserDAO().getProfile(toID);
@@ -173,7 +168,7 @@
 		function getInfiniteChat() {
 			setInterval(function() {
 				chatListFunction(lastID);
-			}, 1000);
+			}, 3000);
 		}
 	</script>
 	<script>

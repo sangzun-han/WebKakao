@@ -13,7 +13,7 @@
 </head>
 <body>
 <%	
-	String path = "C://Users//zzun//eclipse-workspace//Webkakao//WebContent//resources//images/";
+	String path = request.getSession().getServletContext().getRealPath("/resources/images");
 	MultipartRequest multi = new MultipartRequest(request, path, 10 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 	
 	String userID = null;

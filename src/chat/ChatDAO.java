@@ -12,13 +12,17 @@ public class ChatDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
+	/* 
+		String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
+		String dbID = "root";
+		String dbPassword = "0000";
+	*/
 	public ChatDAO() {
 		try {
 			//직접쿼리는 한글들어감  웹에서 들어갈시 깨짐 -> 
-			String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
-			String dbID = "root";
-			String dbPassword = "0000";
+			String dbURL = "jdbc:mysql://jspdb.ca9opcv9urn1.us-east-2.rds.amazonaws.com:3306/webkakao";
+			String dbID = "admin";
+			String dbPassword = "han2187979";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
@@ -28,7 +32,7 @@ public class ChatDAO {
 	
 	public ArrayList<ChatDTO> getChatListByID(String fromID, String toID, String chatID) {
 		ArrayList<ChatDTO> chatList = null;
-		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID=?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";
+		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID=?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -72,7 +76,7 @@ public class ChatDAO {
 	
 	public ArrayList<ChatDTO> getChatListByRecent(String fromID, String toID, int number) {
 		ArrayList<ChatDTO> chatList = null;
-		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE(fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";
+		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE(fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -119,7 +123,7 @@ public class ChatDAO {
 	}
 	
 	public int submit(String fromID, String toID, String chatContent) {
-		String SQL = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW())";
+		String SQL = "INSERT INTO chat VALUES (NULL, ?, ?, ?, NOW())";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, fromID);
@@ -177,7 +181,7 @@ public class ChatDAO {
 	}
 	
 	public String chatgetProfile(String userID) {
-		String SQL = "select *from chat inner join user on user.userID=chat.fromID and toID= ?;";
+		String SQL = "select *from chat inner join user on user.userID=chat.fromID and fromID= ?;";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
