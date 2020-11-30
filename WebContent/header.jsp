@@ -41,6 +41,9 @@
         }else{
             ampm = "오전 ";
         }
+        if (hours - 12 == 0) {
+        	ampm= "오후 ";
+        }
         if (hours < 10){
             hours = "0" + hours;
         }
