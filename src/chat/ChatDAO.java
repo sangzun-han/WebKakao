@@ -181,7 +181,7 @@ public class ChatDAO {
 	}
 	
 	public String chatgetProfile(String userID) {
-		String SQL = "select *from chat inner join user on user.userID=chat.toID and fromID= ?;";
+		String SQL = "select *from chat inner join user on user.userID=chat.fromID and toID= ?;";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
