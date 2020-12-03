@@ -1,21 +1,19 @@
-2020.11.20
+#	Web Kakao	
 
-- 로그인 유뮤에 따른 화면
-- 한글이 깨지는 문제 발생
+eclipse + mysql + jsp + ajax를 이용한 간단한 채팅서비스
 
-<img width="500px;" src="https://user-images.githubusercontent.com/57563053/99800065-1e09e680-2b77-11eb-99e6-eec13039d305.png">
-<img width="500px" src="https://user-images.githubusercontent.com/57563053/99800389-a12b3c80-2b77-11eb-9bb3-aa334b09f284.png">
+배포주소 :  http://ec2-3-139-140-120.us-east-2.compute.amazonaws.com:8080/Webkakao/index.jsp
 
+----
 
+###	실행화면
 
-2020.11.23
+<div align=center>
+<img width="300" src="https://user-images.githubusercontent.com/57563053/100990758-961fd580-3595-11eb-8679-7d88dc23e235.gif">
+<img width="300" src="https://user-images.githubusercontent.com/57563053/100989973-c155f500-3594-11eb-907c-2e59314255d1.gif">
+</div>
 
-- 한글 해결
-- 유저 list 출력
-
-<img width="300px" src="https://user-images.githubusercontent.com/57563053/99922623-d2249080-2d74-11eb-8068-e467436c61d3.png">
-
----
+----------
 
 # COMMIT RULE
 
