@@ -11,17 +11,17 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	/* 
-	String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
-	String dbID = "root";
-	String dbPassword = "0000";
-	 */
+	String dbURL = "jdbc:mysql://jspdb.ca9opcv9urn1.us-east-2.rds.amazonaws.com:3306/webkakao";
+	String dbID = "admin";
+	String dbPassword = "han2187979";
+	*/
 	
 	public UserDAO() {
 		try {
 			//직접쿼리는 한글들어감  웹에서 들어갈시 깨짐 -> 
-			String dbURL = "jdbc:mysql://jspdb.ca9opcv9urn1.us-east-2.rds.amazonaws.com:3306/webkakao";
-			String dbID = "admin";
-			String dbPassword = "han2187979";
+			String dbURL = "jdbc:mysql://localhost:3306/Webkakao";
+			String dbID = "root";
+			String dbPassword = "0000";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
