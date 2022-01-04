@@ -10,11 +10,7 @@ public class UserDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	/* 
-	String dbURL = "jdbc:mysql://jspdb.ca9opcv9urn1.us-east-2.rds.amazonaws.com:3306/webkakao";
-	String dbID = "admin";
-	String dbPassword = "han2187979";
-	*/
+
 	
 	public UserDAO() {
 		try {
