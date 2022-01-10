@@ -2,8 +2,6 @@
 
 eclipse + mysql + jsp + ajax를 이용한 간단한 채팅서비스
 
-배포주소 :  http://ec2-3-139-140-120.us-east-2.compute.amazonaws.com:8080/Webkakao/index.jsp
-
 ----
 
 ###	실행화면
